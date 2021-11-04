@@ -1,0 +1,18 @@
+---
+title: "About me website"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: darkly
+---
+
+# This page has information about me 
+
+Name: Rachel Li
+
+About my academic experience...
+<img src="image/Resume" style="width:70%>
+
+![](image/Resume.png)
+

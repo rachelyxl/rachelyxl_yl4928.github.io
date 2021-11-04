@@ -1,0 +1,105 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library("p8105.datasets")
+library(plotly)
+library(dplyr)
+
+library(flexdashboard)
+```
+
+## Loading initial data
+```{r, message = FALSE}
+data("instacart")
+
+```
+
+## To find whether fruits are reordered more frequently than vegetables. 
+
+```{r, message = FALSE}
+instacart_fruits = 
+  instacart %>% 
+  select(aisle, reordered) %>% 
+  filter(
+    aisle == "fresh fruits"
+  ) %>% 
+  count(reordered == "1") %>% 
+  knitr::kable()
+```
+
+```{r, message = FALSE}
+instacart_vegetables = 
+  instacart %>% 
+  select(aisle, reordered) %>% 
+  filter(
+    aisle == "fresh vegetables"
+  ) %>% 
+  count(reordered == "1") %>% 
+  knitr::kable()
+```
+
+Based on two tables that I made regarding the `reordered` of `fresh fruits` and `fresh vegetables`, it is obvious that the rate of reordering `fresh fruits` is `110782/(110782+39691) = 0.736`; the rate of reordering `fresh vegetables` is `91368/(91368+59241) = 0.607`. Since `0.763 > 0.607` It is true that fruits are reordered more frequently than vegetables. 
+
+
+## loading data for plots
+```{r, message = FALSE}
+instacart_new = 
+  instacart %>% 
+  select(reordered, order_number, days_since_prior_order, product_name, aisle, department, order_hour_of_day, add_to_cart_order) %>% 
+  filter(
+    reordered == "1",
+    days_since_prior_order < 10,
+    department == "produce",
+    order_number > 25,
+   aisle == "fresh vegetables") %>% 
+  filter(grepl("Organic", product_name))
+  
+```
+The data that I chose from the instacart are `fresh vegetables` which were reordered and has the `order_number` larger than `25` and belong to the `department` of `produce`. Also, I chose the `fresh vegetabels` which are `organic`. 
+
+### Chart A
+
+```{r, message = FALSE}
+instacart_new %>% 
+  
+  plot_ly(x = ~order_number, y = ~add_to_cart_order, color = ~product_name, alpha = .5, type = "scatter", mode = "markers")
+```
+Here's the scatterplot which show the relationship between `order_numebr` and `add_to_cart_order`. However, there's no direct relationship between `order_numebr` and `add_to_cart_order` of those organic fresh vegetables. 
+
+### Chart B
+
+```{r, message = FALSE, fig.width = 10}
+instacart_new %>% 
+  filter(
+    order_number > "90"
+  ) %>% 
+  mutate(product_name = fct_reorder(product_name, order_number)) %>% 
+  plot_ly(y = ~order_number, x = ~product_name, color = ~product_name, type = "box", colors = "viridis", alpha = .5)
+```
+Here's the boxplot which shows products and their order_number, which have the `order_number` greater than `90`. 
+
+### Chart C
+
+```{r}
+```{r}
+instacart_new %>%
+  filter(
+    order_number > "90"
+  ) %>% 
+  count(product_name) %>% 
+  mutate(product_name = fct_reorder(product_name, n)) %>% 
+  plot_ly(x = ~product_name, y = ~n, color = ~product_name, type = "bar", colors = "viridis")
+```
+
+Here's the bar plot to show the number of product (products which have the `order_numebr` greater than `90`). 
+
+```
+

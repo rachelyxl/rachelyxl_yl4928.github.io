@@ -1,0 +1,25 @@
+---
+title: "Rachel's Website"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: darkly
+---
+
+# A Brief Self-Introduction
+Rachel Li. I'm a first year student at Mailman School of Public health and majoring in MS in Epidemiology. 
+
+# Link to my resume -- access to my academic experience. 
+[Resume](About.html)
+
+# Link to my Github
+*[Github](https://github.com/rachelyxl)
+
+# Link to my Email address. 
+*[Email](yl4928@cumc.columbia.edu)
+
+# Link to p8105 class homepage. 
+*[8105](http://p8105.com)
+
+
