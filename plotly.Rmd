@@ -87,6 +87,7 @@ instacart_new %>%
   mutate(product_name = fct_reorder(product_name, order_number)) %>% 
   plot_ly(y = ~order_number, x = ~product_name, color = ~product_name, type = "box", colors = "viridis", alpha = .5)
 ```
+Here's the boxplot which shows products and their order_number, which have the `order_number` greater than `90`. 
 
 ## Bar plot 
 
@@ -100,5 +101,6 @@ instacart_new %>%
   plot_ly(x = ~product_name, y = ~n, color = ~product_name, type = "bar", colors = "viridis")
 ```
 
+Here's the bar plot to show the number of product (products which have the `order_numebr` greater than `90`). 
 
 

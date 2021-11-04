@@ -88,8 +88,7 @@ Here's the boxplot which shows products and their order_number, which have the `
 
 ### Chart C
 
-```{r}
-```{r}
+```{r, message = FALSE}
 instacart_new %>%
   filter(
     order_number > "90"
